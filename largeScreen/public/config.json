@@ -1,0 +1,382 @@
+{
+    "configItem": {
+        "_comment": "顶部大标题",
+        "module_title": "数据可视化大屏",
+        "_comment": "左上第一个模块",
+        "module_radio": {
+            "name": "输入模块1",
+            "type": "Group",
+            "submodule": [
+                {
+                    "name": "输入模块",
+                    "value": 0,
+                    "options": [
+                        {
+                            "label": "选项1",
+                            "value": 0
+                        },
+                        {
+                            "label": "选项2",
+                            "value": 1
+                        },
+                        {
+                            "label": "选项3",
+                            "value": 2
+                        }
+                    ]
+                },
+                {
+                    "name": "输入模块",
+                    "value": 0,
+                    "options": [
+                        {
+                            "label": "选项1",
+                            "value": 0
+                        },
+                        {
+                            "label": "选项2",
+                            "value": 1
+                        },
+                        {
+                            "label": "选项3",
+                            "value": 2
+                        }
+                    ]
+                }
+            ]
+        },
+        "_comment": "预设模拟数据",
+        "simulateddata": [
+            {
+                "label": "选项选项选项选项",
+                "type": "input",
+                "value": 0
+            },
+            {
+                "label": "选项1",
+                "type": "multiple",
+                "value": [
+                    0
+                ],
+                "options": [
+                    {
+                        "label": "选项1",
+                        "value": 0
+                    },
+                    {
+                        "label": "选项2",
+                        "value": 1
+                    },
+                    {
+                        "label": "选项3",
+                        "value": 2
+                    }
+                ]
+            },
+            {
+                "label": "选项1",
+                "type": "select",
+                "value": 0,
+                "options": [
+                    {
+                        "label": "选项1",
+                        "value": 0
+                    },
+                    {
+                        "label": "选项2",
+                        "value": 1
+                    },
+                    {
+                        "label": "选项3",
+                        "value": 2
+                    }
+                ],
+                "color": "red",
+                "bgColor": "#777777"
+            },
+            {
+                "label": "选项1",
+                "value": 0,
+                "color": "blue"
+            },
+            {
+                "label": "选项1",
+                "value": 0,
+                "color": "blue"
+            },
+            {
+                "label": "选项1",
+                "value": 0,
+                "color": "blue"
+            },
+            {
+                "label": "选项1",
+                "value": 0,
+                "color": "blue"
+            },
+            {
+                "label": "选项1",
+                "value": 0,
+                "color": "blue"
+            },
+            {
+                "label": "选项1",
+                "value": 0,
+                "color": "blue"
+            },
+            {
+                "label": "选项1",
+                "value": 0,
+                "color": "blue"
+            },
+            {
+                "label": "选项1",
+                "value": 0,
+                "color": "blue"
+            },
+            {
+                "label": "选项1",
+                "value": 0,
+                "color": "blue"
+            },
+            {
+                "label": "选项1",
+                "value": 0,
+                "color": "blue"
+            }
+        ],
+        "_comment": "左上第二个模块",
+        "module_input": {
+            "name": "展示模块2",
+            "value": 0,
+            "type": "Group",
+            "submodule": [
+                {
+                    "name": "输入模块",
+                    "value": [
+                        1,
+                        2,
+                        3,
+                        4
+                    ],
+                    "formList": [
+                        {
+                            "type": "input",
+                            "label": "选项选项选项选项选项",
+                            "span": 2
+                        },
+                        {
+                            "type": "input",
+                            "label": "选项2"
+                        },
+                        {
+                            "type": "input",
+                            "label": "选项3"
+                        },
+                        {
+                            "type": "input",
+                            "label": "选项4",
+                            "value": ""
+                        },
+                        {
+                            "type": "input",
+                            "label": "选项5"
+                        },
+                        {
+                            "type": "input",
+                            "label": "选项6",
+                            "span": 1
+                        },
+                        {
+                            "type": "input",
+                            "label": "选项7",
+                            "span": 3
+                        },
+                        {
+                            "type": "input",
+                            "label": "选项8"
+                        },
+                        {
+                            "type": "input",
+                            "label": "选项9"
+                        }
+                    ]
+                },
+                {
+                    "name": "输入模块",
+                    "value": [],
+                    "formList": [
+                        {
+                            "type": "input",
+                            "label": "输入1",
+                            "span": 2
+                        },
+                        {
+                            "type": "input",
+                            "label": "输入2",
+                            "span": 1
+                        },
+                        {
+                            "type": "input",
+                            "label": "输入3",
+                            "span": 3
+                        },
+                        {
+                            "type": "input",
+                            "label": "输入4",
+                            "span": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        "_comment": "左下角视频图片",
+        "module_img": {
+            "name": "多媒体素材",
+            "type": "url",
+            "value": "/example.webp"
+        },
+        "_comment": "雷达图一个维度的最大分值，使不同维度的比较存在意义",
+        "indicator_max": 100,
+        "_comment": "右边主表算法选择",
+        "module_select": {
+            "name": "右边主表",
+            "type": "Group",
+            "submodule": [
+                {
+                    "name": "算法",
+                    "value": 0,
+                    "options": [
+                        {
+                            "label": "选项1",
+                            "value": 0
+                        },
+                        {
+                            "label": "选项2",
+                            "value": 1
+                        },
+                        {
+                            "label": "选项3",
+                            "value": 2
+                        }
+                    ]
+                },
+                {
+                    "name": "第二个",
+                    "value": 0,
+                    "options": [
+                        {
+                            "label": "选项1",
+                            "value": 0
+                        },
+                        {
+                            "label": "选项2",
+                            "value": 1
+                        },
+                        {
+                            "label": "选项3",
+                            "value": 2
+                        }
+                    ]
+                }
+            ]
+        },
+        "_comment": "设置主表的表头数据",
+        "module_table_columns": [
+            {
+                "title": "姓名",
+                "dataIndex": "name",
+                "key": "name"
+            },
+            {
+                "title": "年龄",
+                "dataIndex": "age",
+                "key": "age"
+            },
+            {
+                "title": "住址",
+                "dataIndex": "id",
+                "key": "id"
+            }
+        ],
+        "_comment": "设置主表的表头数据",
+        "module_table1_columns": [
+            {
+                "title": "111",
+                "dataIndex": "name",
+                "key": "name"
+            },
+            {
+                "title": "222",
+                "dataIndex": "age",
+                "key": "age"
+            },
+            {
+                "title": "333",
+                "dataIndex": "address",
+                "key": "address"
+            }
+        ],
+        "_comment": "设置主表的表头数据",
+        "module_table2_columns": [
+            {
+                "title": "444",
+                "dataIndex": "name",
+                "key": "name"
+            },
+            {
+                "title": "555",
+                "dataIndex": "age",
+                "key": "age"
+            },
+            {
+                "title": "666",
+                "dataIndex": "address",
+                "key": "address"
+            }
+        ],
+        "_comment": "设置主表的表头数据",
+        "module_table3_columns": [
+            {
+                "title": "姓名",
+                "dataIndex": "name",
+                "key": "name"
+            },
+            {
+                "title": "年龄",
+                "dataIndex": "age",
+                "key": "age"
+            },
+            {
+                "title": "住址",
+                "dataIndex": "address",
+                "key": "address"
+            }
+        ],
+        "_comment": "右侧中间的名字",
+        "module_right_title2": "中间的名字",
+        "_comment": "设置右侧中间的tab名字",
+        "module_table_ext": [
+            "表格1",
+            "表格2",
+            "表格3"
+        ],
+        "_comment": "设置数据库页面展示的名字",
+        "module_csv": {
+            "table1": "表格1",
+            "table2": "表格2",
+            "table3": "表格3",
+            "table4": "表格4"
+        },
+        "_comment": "设置地图相关数据",
+        "module_emap": {
+            "redPointImage": "redpoint.jpg",
+            "bluePointImage": "redpoint.jpg",
+            "polylineColor": "#000000",
+            "htmlString": "111111\n11111",
+            "htmlStringFontsize": "6px",
+            "htmlStringWidth": "60px",
+            "htmlStringHeight": "30px"
+        }
+    }
+}

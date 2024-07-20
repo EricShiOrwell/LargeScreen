@@ -1,0 +1,13 @@
+@import './base.css';
+
+#app {
+  height: 100%;
+}
+
+.large-Screen .ant-radio-wrapper{
+  color: #fff;
+}
+
+.large-Screen .ant-form-item .ant-form-item-label >label {
+  color: #fff;
+}

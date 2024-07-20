@@ -1,0 +1,216 @@
+{
+    "frame": [
+        {   "name": "第一步",
+            "centerPointer": [103.84, 31.15, 17850000],
+            "bluePointer": [
+                [116,40],
+                [110,40]
+            ],
+            "redPointer": [
+                [105,30],
+                [95,30],
+                [95,60]
+            ],
+            "polyline": [
+                [[116,40],[110,40]],
+                [[105,30], [95,30], [95,60]]
+            ],
+            "imagineData": ["s","s","s"],
+            "showImagineData": [["s","s","s"], ["s","s","s"]],
+            "table": {
+                "_": [
+                    {
+                      "key": "1",
+                      "name": "胡彦斌1",
+                      "name_hover": "胡彦斌hover",
+                      "age": 32,
+                      "id": 1,
+                      "children": [{
+                        "operate": false,
+                        "sum": 5,
+                        "key": "1",
+                        "name": 2,
+                        "age": 55}],
+                      "otherDetailed": {
+                        "table1": [
+                            {
+                                "key": "2",
+                                "name": 4,
+                                "age": 32
+                            },
+                            {
+                                "key": "3",
+                                "name": 55,
+                                "age": 16
+                            }
+                        ],
+                        "table2": [],
+                        "table2_score": 100,
+                        "table3": [],
+                        "table3_score": 80
+                      }
+                    },
+                    {
+                        "key": "2",
+                        "name": "胡彦斌2",
+                        "age": 32,
+                        "otherDetailed": {}
+                    },
+                    {
+                        "key": "3",
+                        "name": "胡彦斌",
+                        "age": 32,
+                        "otherDetailed": {}
+                    },
+                    {
+                        "key": "4",
+                        "name": "胡彦斌",
+                        "age": 32,
+                        "otherDetailed": {}
+                      },
+                      {
+                        "key": "5",
+                        "name": "胡彦斌",
+                        "age": 32,
+                        "otherDetailed": {}
+                      },
+                      {
+                        "key": "6",
+                        "name": "胡彦斌",
+                        "age": 32,
+                        "otherDetailed": {}
+                      }
+                ],
+                "0_0": [
+                    {
+                      "key": "1",
+                      "name": "胡彦斌",
+                      "age": 32,
+                      "id": 1,
+                      "children": [{
+                        "operate": false,
+                        "sum": 5,
+                        "key": "1",
+                        "name": 2,
+                        "age": 55}],
+                      "otherDetailed": {
+                        "table1": [
+                            {
+                                "key": "2",
+                                "name": 4,
+                                "age": 32
+                            },
+                            {
+                                "key": "3",
+                                "name": 55,
+                                "age": 16
+                            }
+                        ],
+                        "table2": [],
+                        "table2_score": 100,
+                        "table3": [],
+                        "table3_score": 80
+                      }
+                    },
+                    {
+                        "key": "2",
+                        "name": "胡彦斌\n11111",
+                        "age": 32,
+                        "otherDetailed": {}
+                    },
+                    {
+                        "key": "3",
+                        "name": "胡彦斌",
+                        "age": 32,
+                        "otherDetailed": {}
+                    },
+                    {
+                        "key": "4",
+                        "name": "胡彦斌",
+                        "age": 32,
+                        "otherDetailed": {}
+                      },
+                      {
+                        "key": "5",
+                        "name": "胡彦斌",
+                        "age": 32,
+                        "otherDetailed": {}
+                      },
+                      {
+                        "key": "6",
+                        "name": "胡彦斌",
+                        "age": 32,
+                        "otherDetailed": {}
+                      }
+                ]
+            },
+            "log": "11111\n22222\n1111111\ndddd"
+        },
+        {   "name": "第二步",
+            "centerPointer": [116,40,17850000],
+            "bluePointer": [
+                [116,40]
+            ],
+            "redPointer": [
+            ],
+            "polyline": [
+
+            ],
+            "imagineData": ["sd","sd","sd"],
+            "showImagineData": [["sd","sd","sd"], ["sd","sd","sd"]],
+            "table": {
+                "0_0": [
+                    {
+                      "key": "1",
+                      "name": "胡彦斌",
+                      "age": 32,
+                      "otherDetailed": {}
+                    }
+                ],
+                "0_1": [
+                    {
+                      "key": "1",
+                      "name": "123",
+                      "age": 2,
+                      "otherDetailed": {}
+                    }
+                ]
+            },
+            "log": ""
+        },
+        {   
+        "name": "全局",
+        "centerPointer": [116,40,17850000],
+        "bluePointer": [
+            [116,40]
+        ],
+        "redPointer": [
+        ],
+        "polyline": [
+
+        ],
+        "imagineData": ["sd","sd","sd"],
+        "showImagineData": [["sd","sd","sd"], ["sd","sd","sd"]],
+        "table": {
+            "0_0": [
+                {
+                  "key": "1",
+                  "name": "胡彦斌",
+                  "age": 32,
+                  "otherDetailed": {}
+                }
+            ],
+            "0_1": [
+                {
+                  "key": "1",
+                  "name": "123",
+                  "age": 2,
+                  "otherDetailed": {}
+                }
+            ]
+        },
+        "log": ""
+    }
+    ],
+    "timestamp": 2719576899117
+}

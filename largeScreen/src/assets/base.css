@@ -1,0 +1,23 @@
+body {
+  --bg-color-black: black;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  height: 100vh;
+  background-color: var(--bg-color-black);
+}
+::-webkit-scrollbar-track-piece {
+  background-color: transparent;
+}
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: hsla(220, 4%, 58%, .3);
+}
