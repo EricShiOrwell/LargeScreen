@@ -15,11 +15,19 @@ export const useCalculateStore = defineStore('calculate', () => {
   const flag = ref(0)
   const frame = ref(0)
   const calculate = shallowRef([])
+  const isOverall = ref(false)
   function changeData(timeStamp, data) {
-    if (flag.value !== timeStamp) {
+    if (flag.value !== timeStamp && data.length > 0) {
       frame.value = 0
       flag.value = timeStamp
-      calculate.value = data
+      let overall = data.find(e => e.name === '全局')
+      if(overall) {
+        isOverall.value = true
+        calculate.value = [overall].concat(data.filter(e => e.name !== '全局'))
+      } else {
+        isOverall.value = false
+        calculate.value = data
+      }
     }
   }
 
@@ -27,7 +35,8 @@ export const useCalculateStore = defineStore('calculate', () => {
     flag.value = 0
     frame.value = 0
     calculate.value = []
+    isOverall.value = false
   }
 
-  return { flag, frame, calculate, changeData, $reset }
+  return { flag, frame, calculate, isOverall, changeData, $reset }
 })

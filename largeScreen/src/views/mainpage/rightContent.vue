@@ -4,6 +4,12 @@ import { reactive, ref, computed, onMounted } from 'vue';
 import { request } from '@/assets/myfetch.js'
 import { useCalculateStore } from '@/stores/counter'
 import { message } from 'ant-design-vue';
+
+import { h } from 'vue';
+import {
+    FundFilled
+} from '@ant-design/icons-vue';
+
 const Calculate = useCalculateStore()
 const props = defineProps(['configItem'])
 const columns0 = ref([
@@ -39,6 +45,9 @@ const score = ref([0, 0])
 const currentSteps = ref(0)
 const stepItem = ref([])
 const logValue = ref('')
+const isOverall = ref(false)
+const detailsList = ref([])
+const detailsListModal = ref(false)
 // fin init
 
 function selectedCallback() {
@@ -66,7 +75,6 @@ function selectRow(record) {
     let sData = props.configItem.module_table_columns.filter(item => item.dataIndex !== 'id').map(item => {
         return Number(record.children[0][item.dataIndex] || 0)
     })
-    debugger
     myChart.setOption({
         series: [
             {
@@ -148,6 +156,12 @@ function makeDecision() {
     selectValue1.value = props.configItem['module_select'].submodule[1].options[0].value
     selectedCallback()
 }
+
+function openShowDetails(details) {
+    detailsList.value = details
+    detailsListModal.value = true
+
+}
 onMounted(() => {
     let chartDom = document.getElementById('echarts');
     myChart = echarts.init(chartDom);
@@ -212,16 +226,17 @@ onMounted(() => {
 })
 
 Calculate.$subscribe((mutation, state) => {
-    currentSteps.value = state.frame
     let newstepItem = []
+    isOverall.value = state.isOverall
+    currentSteps.value = isOverall.value ? state.frame - 1 : state.frame
     for (let i = 0; i < state.calculate.length; i++) {
-        newstepItem.push({ title: state.calculate[i].name })
+        newstepItem.push({ title: state.calculate[i].name, icon: isOverall.value && i === 0 && h(FundFilled) || undefined })
     }
     stepItem.value = newstepItem
     selectValue0.value = undefined
     selectValue1.value = undefined
     if (state.calculate.length > 0) {
-        logValue.value = state.calculate[currentSteps.value].log
+        logValue.value = state.calculate[state.frame].log
         selectedCallback()
     } else {
         dataSource0.value = []
@@ -253,7 +268,7 @@ Calculate.$subscribe((mutation, state) => {
 })
 function changeSteps(currect) {
     // Calculate.frame = currect
-    Calculate.$patch({ frame: currect })
+    Calculate.$patch({ frame: isOverall.value ? currect + 1 : currect })
 }
 </script>
 
@@ -283,15 +298,26 @@ function changeSteps(currect) {
                             </template>
                             <template v-else-if="record.operate !== false">
                                 <!-- :style="{ marginLeft: `${buttonWidth}px`, whiteSpace: 'nowrap' }" -->
-                                <a-tooltip placement="topLeft" trigger="click" :overlayStyle="{ whiteSpace: 'pre-line' }">
+                                <a-tooltip placement="topLeft" trigger="click" :overlayStyle="{ whiteSpace: 'pre-line' }"
+                                    v-if="!Array.isArray(record[column.key + '_hover'])">
                                     <template #title>
                                         <span>{{ record[column.key + '_hover'] || text }}</span>
                                     </template>
                                     {{ text }}
                                 </a-tooltip>
+                                <span v-else @click="openShowDetails(record[column.key + '_hover'])">
+                                    {{ text }}
+                                </span>
                             </template>
                         </template>
                     </a-table>
+                    <a-modal v-model:open="detailsListModal" title="详情页" :footer="null" :bodyStyle="{padding: '16px 0px 24px 0px'}">
+                        <a-descriptions bordered size="small">
+                            <a-descriptions-item v-for="(item, i) in detailsList" :key="i" :label="item.label" :span="3">
+                                {{ item.value }}
+                            </a-descriptions-item>
+                        </a-descriptions>
+                    </a-modal>
                 </a-col>
                 <a-col :span="4">
                     <div id="echarts" style="width: 100%;height: 300px;"></div>
@@ -339,7 +365,8 @@ function changeSteps(currect) {
             </a-col>
             <a-col :span="12" style="align-items: center;display: flex;padding: 24px;">
                 <a-steps style="width: 100%;height: 24px;" v-model:current="currentSteps" size="small" :items="stepItem"
-                    label-placement="vertical" @change="changeSteps" class="my-bottom-step"></a-steps>
+                    :initial="isOverall ? -1 : 0" label-placement="vertical" @change="changeSteps"
+                    :class="[isOverall ? 'has-overall' : '', 'my-bottom-step']"></a-steps>
             </a-col>
         </a-row>
     </a-flex>
@@ -471,8 +498,16 @@ function changeSteps(currect) {
     background-color: #fff;
 }
 
-.my-bottom-step.ant-steps div.ant-steps-item:nth-last-of-type(2) .ant-steps-item-tail::after {
+/* .my-bottom-step.ant-steps div.ant-steps-item:nth-last-of-type(2) .ant-steps-item-tail::after {
     background-color: rgba(255, 255, 255, 0) !important;
+} */
+
+.has-overall.ant-steps div.ant-steps-item:nth-of-type(1) .ant-steps-item-tail::after {
+    background-color: rgba(255, 255, 255, 0) !important;
+}
+
+.has-overall.ant-steps .ant-steps-item-finish .anticon-fund {
+    color: #fff;
 }
 
 .waterbg {
@@ -492,5 +527,4 @@ function changeSteps(currect) {
 
 .table-pre-line .ant-table-cell {
     white-space: pre-line;
-}
-</style>
+}</style>
