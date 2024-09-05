@@ -32,7 +32,7 @@ onUnmounted(() => {
 <template>
   <div class="header-container">
     <div class="header-bg">
-      <div>{{ props.configItem.module_title }}</div>
+      <div :style="{...props.configItem.module_title}">{{ props.configItem.module_title.text }}</div>
     </div>
     <div class="time-container">{{ showTimeString }}</div>
     <div class="dataexcel-link"><a-button type="link" @click="gotoDataExcel">数据管理</a-button>

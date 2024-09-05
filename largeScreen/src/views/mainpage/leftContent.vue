@@ -73,17 +73,18 @@ function runtask(flag) {
         status.value = 0
     }
     if (flag === 3) {
-        Calculate.$reset()
-        debugger
-        value0.value = 0
-        value1.value = 0
-        fileUrl.value = ''
-        dataValue.value = [JSON.parse(JSON.stringify(props.configItem['simulateddata']))]
-        currentDataSteps.value = 0
-        stepItem.value = []
-        status.value = 0
-        activeKey.value = 0
-        moduleInputValue.value = props.configItem['module_input'].submodule.map(item => [...item.value])
+        location.reload()
+        // Calculate.$reset()
+        // debugger
+        // value0.value = 0
+        // value1.value = 0
+        // fileUrl.value = ''
+        // dataValue.value = [JSON.parse(JSON.stringify(props.configItem['simulateddata']))]
+        // currentDataSteps.value = 0
+        // stepItem.value = []
+        // status.value = 0
+        // activeKey.value = 0
+        // moduleInputValue.value = props.configItem['module_input'].submodule.map(item => [...item.value])
     }
     if (flag === 4) {
         open.value = true
@@ -167,7 +168,7 @@ function changeSteps(currect) {
                             <a-button type="primary" @click="runtask(0)">保存</a-button>
                             <a-button type="primary" @click="runtask(1)" :disabled="status !== 1">运行</a-button>
                             <!-- <a-button type="primary" @click="runtask(2)" :disabled="status !== 2">中止</a-button> -->
-                            <a-button type="primary" @click="runtask(3)">清空</a-button>
+                            <a-button type="primary" @click="runtask(3)">刷新</a-button>
                             <a-button type="primary" @click="runtask(4)">{{ value1 === 2 ? '数据' : '导入' }}</a-button>
                         </a-space>
                     </a-col>

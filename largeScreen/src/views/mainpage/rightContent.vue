@@ -270,13 +270,16 @@ function changeSteps(currect) {
     // Calculate.frame = currect
     Calculate.$patch({ frame: isOverall.value ? currect + 1 : currect })
 }
+
+const segmentedOption = computed(() => Calculate.calculate.map(item => item.name))
+// const segmentedValue = ref(segmentedOption[0])
 </script>
 
 <template>
     <a-flex :vertical="true" justify="space-between" style="height: 100%;">
         <div>
             <sub-title :title="props.configItem['module_select'].name"></sub-title>
-            <a-row style="height: 300px;overflow: auto;">
+            <a-row style="height: 350px;">
                 <a-col :span="20">
                     <a-flex justify="space-between">
                         <a-space style="text-align: left;">
@@ -288,7 +291,8 @@ function changeSteps(currect) {
                         </a-space>
                         <span>当前选择：{{ selectName }}</span>
                     </a-flex>
-                    <a-table :dataSource="dataSource0" :columns="columns0" size="small" class="table-pre-line">
+                    <a-table :dataSource="dataSource0" :columns="columns0" size="small" class="table-pre-line"
+                        :scroll="{ y: 223 }">
                         <template #bodyCell="{ text, column, record }">
                             <template v-if="column.key === 'operate' && record.operate !== false">
                                 <a @click="selectRow(record)">选择</a>
@@ -311,12 +315,28 @@ function changeSteps(currect) {
                             </template>
                         </template>
                     </a-table>
-                    <a-modal v-model:open="detailsListModal" title="详情页" :footer="null" :bodyStyle="{padding: '16px 0px 24px 0px'}">
-                        <a-descriptions bordered size="small">
-                            <a-descriptions-item v-for="(item, i) in detailsList" :key="i" :label="item.label" :span="3">
-                                {{ item.value }}
-                            </a-descriptions-item>
-                        </a-descriptions>
+                    <a-modal v-model:open="detailsListModal" title="详情页" :footer="null"
+                        :bodyStyle="{ padding: '16px 0px 24px 0px' }">
+                        <template v-if="Array.isArray(detailsList[0])">
+                            <a-tabs >
+                                <a-tab-pane :key="tab" v-for="(tab, j) in segmentedOption" :tab="tab">
+                                    <a-descriptions bordered size="small">
+                                        <a-descriptions-item v-for="(item, i) in detailsList[j]" :key="i"
+                                            :label="item.label" :span="3">
+                                            {{ item.value }}
+                                        </a-descriptions-item>
+                                    </a-descriptions>
+                                </a-tab-pane>
+                            </a-tabs>
+                        </template>
+                        <template v-else>
+                            <a-descriptions bordered size="small">
+                                <a-descriptions-item v-for="(item, i) in detailsList" :key="i" :label="item.label"
+                                    :span="3">
+                                    {{ item.value }}
+                                </a-descriptions-item>
+                            </a-descriptions>
+                        </template>
                     </a-modal>
                 </a-col>
                 <a-col :span="4">
@@ -432,7 +452,7 @@ function changeSteps(currect) {
 
 .large-screen-right-tabs .ant-tabs-content-holder {
     /* min-height: 276px; */
-    height: 300px;
+    height: 250px;
 }
 
 /* .large-screen-right-tabs .ant-tabs-tabpane input {

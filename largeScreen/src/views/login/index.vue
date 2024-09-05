@@ -25,10 +25,13 @@ const onFinish = values => {
 const onFinishFailed = errorInfo => {
   console.log('Failed:', errorInfo);
 };
+
+const myTitle = window.configItem.home_page_title
 </script>
 
 <template>
   <div class="login-container">
+    <div class="title" :style="{...myTitle}">{{ myTitle.text }}</div>
     <div class="card">
       <h2>登录</h2>
       <a-form :model="formState" name="basic" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }" autocomplete="off"
@@ -60,7 +63,11 @@ const onFinishFailed = errorInfo => {
   background-size: cover;
   background-position: center;
 }
-
+.login-container .title {
+  text-align: center;
+  position: absolute;
+  width: 100%;
+}
 .card {
   background-color: #000;
   color: #fff;
