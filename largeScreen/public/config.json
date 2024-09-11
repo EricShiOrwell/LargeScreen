@@ -1,7 +1,17 @@
 {
     "configItem": {
+        "_comment": "首页标题",
+        "home_page_title": {
+            "text": "首页标题文字",
+            "fontSize": "12px",
+            "top": "30px",
+            "color": "red"
+        },
         "_comment": "顶部大标题",
-        "module_title": "数据可视化大屏",
+        "module_title": {
+            "text": "数据可视化大屏",
+            "fontSize": "12px"
+        },
         "_comment": "左上第一个模块",
         "module_radio": {
             "name": "输入模块1",
@@ -367,6 +377,59 @@
             "table2": "表格2",
             "table3": "表格3",
             "table4": "表格4"
+        },
+        "_comment": "设置数据库字段的属性",
+        "module_csv_config": {
+            "table1": [{
+                "type": "input",
+                "label": "单纯文本输入",
+                "placeholder": "提示文字"
+            },
+            {
+                "type": "number",
+                "label": "数字大小",
+                "placeholder": "提示文字",
+                "max": 10,
+                "min": 0,
+                "step": 0.1
+            },
+            {
+                "type": "select",
+                "label": "下拉数据",
+                "placeholder": "提示文字",
+                "options": [{"label": "shuju", "value": "shuju"}]
+            },
+            {
+                "type": "selectGroup",
+                "label": "下拉组",
+                "placeholder": "提示文字",
+                "options": [[{"label": "shuju1", "value": "shuju1"}], [{"label": "shuju2", "value": "shuju2"}, {"label": "shuju3", "value": "shuju3"}]]
+            }],
+            "table4": [{
+                "type": "input",
+                "label": "单纯文本输入",
+                "placeholder": "提示文字"
+            },
+            {
+                "type": "number",
+                "label": "数字大小",
+                "placeholder": "提示文字",
+                "max": 10,
+                "min": 0,
+                "step": 0.1
+            },
+            {
+                "type": "select",
+                "label": "下拉数据",
+                "placeholder": "提示文字",
+                "options": [{"label": "shuju", "value": "shuju"}]
+            },
+            {
+                "type": "selectGroup",
+                "label": "下拉组",
+                "placeholder": "提示文字",
+                "options": [[{"label": "shuju1", "value": "shuju1"}], [{"label": "shuju2", "value": "shuju2"}, {"label": "shuju3", "value": "shuju3"}]]
+            }]
         },
         "_comment": "设置地图相关数据",
         "module_emap": {

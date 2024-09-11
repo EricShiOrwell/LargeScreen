@@ -12,7 +12,8 @@ const router = useRouter()
 const headerStyle = {
   textAlign: 'left',
   color: '#fff',
-  height: '60',
+  // height: '60',
+  backgroundColor: '#0a0a0a'
 };
 const contentStyle = {
 };
@@ -30,12 +31,12 @@ function gotohome() {
 // })
 </script>
 
-<template>
-  <a-layout :style="{ height: '100%' }" class="large-Screen-manage">
+<template>  
+<a-layout :style="{ height: '100%' }" class="large-Screen-manage">
     <a-layout-header :style="headerStyle">
       <a-flex justify="space-between" align="center">
         <h1>
-          <DatabaseFilled style="margin-right: 16px;" />数据管理
+          <DatabaseFilled style="margin-right: 16px;" />数据库管理
         </h1>
         <h1>
           <a-tooltip placement="bottom">
@@ -79,6 +80,9 @@ function gotohome() {
   overflow-y: auto;
   padding: 12px;
   /* min-width: 1000px; */
+  background-color: #363636;
+  /* background-color: var(--bg-color-black); */
+
 }
 
 .excel-page .ant-row {

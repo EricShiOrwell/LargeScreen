@@ -3,7 +3,7 @@
         <a-tabs v-model:activeKey="activeKey" type="card" @tabClick="changetabs">
             <template #rightExtra>
                 <a-space style="margin-bottom: 12px;">
-
+                    <a-button @click="openModal">添加</a-button>
                     <a-upload v-model:file-list="fileList" name="file" action="/api/saveCsv" @change="handleChange"
                         :data="{ name: activeKey }" accept=".csv" :showUploadList="false">
                         <a-button>
@@ -23,6 +23,20 @@
             licenseKey="non-commercial-and-evaluation"></hot-table> -->
             <hot-table :settings="hotSettings" ref="hotTableComponent"></hot-table>
         </div>
+        <a-modal v-model:open="open" title="添加数据" @ok="insertData" @cancel="initData" ok-text="确认" cancel-text="取消">
+            <a-form :model="formState" :label-col="{ span: 8 }" :wrapper-col="{ span: 12 }" autocomplete="off">
+                <a-form-item :label="formItem.label" :name="i" :rules="formItem.rules || []" v-for="(formItem, i) in tabConfig[activeKey]" :key="i">
+                    <a-input v-if="formItem.type === 'input'" v-model:value="formState[i]" :placeholder="formItem.placeholder || '请输入'"/>
+                    <a-select v-else-if="formItem.type === 'select'" v-model:value="formState[i]" :placeholder="formItem.placeholder || '请选择'"
+                    :options="formItem.options"></a-select>
+                    <a-input-number v-else-if="formItem.type === 'number'" v-model:value="formState[i]" :min="formItem.min" :max="formItem.max" :step="formItem.step || 1"
+                    />
+                    <a-space v-else-if="formItem.type === 'selectGroup'">
+                        <a-select v-for="(selectItem, j) in formItem.options" :key="j" v-model:value="formState[i][j]" :placeholder="formItem.placeholder || '请选择'" :options="selectItem"></a-select>
+                    </a-space>
+                </a-form-item>
+            </a-form>
+        </a-modal>
     </a-spin>
 </template>
   
@@ -48,8 +62,8 @@ export default defineComponent({
                 // height: 'auto',
                 autoWrapRow: true,
                 autoWrapCol: true,
-                minSpareRows: 1,
-                minSpareCols: 1,
+                // minSpareRows: 1,
+                // minSpareCols: 1,
                 // enable filtering
                 filters: true,
                 // enable the column menu
@@ -59,11 +73,16 @@ export default defineComponent({
                 licenseKey: 'non-commercial-and-evaluation',
             },
             activeKey: 'table1',
-            tabkey: ['table1', 'table2', 'table3', 'table4'],
-            tabname: ['table1', 'table2', 'table3', 'table4'],
-            dataMap: [[], [], [], []],
+            // tabkey: ['table1', 'table2', 'table3', 'table4'],
+            // tabname: ['table1', 'table2', 'table3', 'table4'],
+            tabkey: [],
+            tabname: [],
+            tabConfig: {},
+            dataMap: {},
             spinning: true,
-            fileList: []
+            fileList: [],
+            open: false,
+            formState: {}
         };
     },
     components: {
@@ -102,8 +121,8 @@ export default defineComponent({
                 data: { name: activeKey }
             }).then(res => {
                 // debugger
-                const _key = this.tabkey.findIndex(key => key === activeKey)
-                this.dataMap[_key] = res
+                // const _key = this.tabkey.findIndex(key => key === activeKey)
+                this.dataMap[activeKey] = res
                 // this.hotSettings.data = JSON.parse(JSON.stringify(res))
                 this.$refs.hotTableComponent.hotInstance.loadData(JSON.parse(JSON.stringify(res)));
                 // this.$refs.hotTableComponent.hotInstance.updateSettings({});
@@ -142,20 +161,60 @@ export default defineComponent({
                 okType: 'danger',
                 cancelText: '取消',
                 onOk() {
-                    const _key = that.tabkey.findIndex(key => key === that.activeKey)
-                    let res = that.dataMap[_key]
+                    // const _key = that.tabkey.findIndex(key => key === that.activeKey)
+                    let res = that.dataMap[that.activeKey]
                     that.$refs.hotTableComponent.hotInstance.loadData(JSON.parse(JSON.stringify(res)));
                 },
                 onCancel() {
                     console.log('Cancel');
                 },
             });
+        },
+        insertData() {
+            // console.log(this.formState)
+            let data = []
+            this.tabConfig[this.activeKey].forEach((element,i) => {
+                if(element.type === "selectGroup") {
+                    data.push(this.formState[i].join(','))
+                } else {
+                    data.push(this.formState[i] || '')
+                }
+            })
+            let res = this.$refs.hotTableComponent.hotInstance.getSourceData() || []
+            res.push(data)
+            this.$refs.hotTableComponent.hotInstance.loadData(res);
+            this.open = false
+        },
+        initData() {
+            this.formState = {}
+            this.tabConfig[this.activeKey].forEach((element,i) => {
+                if(element.type === "selectGroup") {
+                    this.formState[i] = new Array(element.options.length)
+                }
+            });
+            this.open = false
+        },
+        openModal() {
+            this.formState = {}
+            this.tabConfig[this.activeKey].forEach((element,i) => {
+                if(element.type === "selectGroup") {
+                    this.formState[i] = new Array(element.options.length)
+                }
+            });
+            this.open = true
         }
     },
     mounted() {
-        this.tabname = this.tabkey.map(item => window.configItem.module_csv[item])
-        this.getCsv(this.activeKey)
-        // this.spinning = false
+        if (window.configItem.module_csv) {
+            this.tabkey = Object.keys(window.configItem.module_csv)
+            this.tabname = this.tabkey.map(item => window.configItem.module_csv[item])
+            this.getCsv(this.activeKey)
+            // this.spinning = false
+        }
+        if(window.configItem.module_csv_config) {
+            this.tabConfig = window.configItem.module_csv_config
+        }
+        // window.test =this
     }
 });
 </script>
@@ -174,5 +233,21 @@ export default defineComponent({
 .excel-spin .ant-spin-container {
     height: 100%;
 }
+
+/* .excel-container .handsontable td {
+    background-color: var(--bg-color-black);
+    color: white;
+    border-color: #5e5e5e;
+} */
+/* .excel-container .handsontable th {
+    background-color: #262626;
+    color: white;
+    border-color: #5e5e5e;
+} */
+
+/* .excel-container .handsontable tbody th.ht__highlight, .excel-container .handsontable thead th.ht__highlight {
+    background-color: #0a0a0a;
+    color: white;
+} */
 </style>
   

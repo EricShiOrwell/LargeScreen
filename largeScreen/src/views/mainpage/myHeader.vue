@@ -35,7 +35,7 @@ onUnmounted(() => {
       <div :style="{...props.configItem.module_title}">{{ props.configItem.module_title.text }}</div>
     </div>
     <div class="time-container">{{ showTimeString }}</div>
-    <div class="dataexcel-link"><a-button type="link" @click="gotoDataExcel">数据管理</a-button>
+    <div class="dataexcel-link"><a-button type="link" @click="gotoDataExcel">数据库管理</a-button>
 
       <a-tooltip placement="bottom">
         <template #title>

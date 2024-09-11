@@ -197,6 +197,9 @@
                 {
                   "key": "1",
                   "name": "胡彦斌",
+                  "name_hover": [[{"label": "test", "value": "testValue"}, {"label": "test2", "value": "testValue2"}],
+                  [{"label": "test2", "value": "testValue"}, {"label": "test2", "value": "testValue2"}],
+                  [{"label": "test3", "value": "testValue"}, {"label": "test2", "value": "testValue2"}]],
                   "age": 32,
                   "otherDetailed": {}
                 }
