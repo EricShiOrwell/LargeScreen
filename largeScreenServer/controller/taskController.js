@@ -71,9 +71,35 @@ async function runProgram(ctx, next) {
     return
 }
 
-function checkData() {
+async function checkSelf(ctx, next) {
+    try {
+        timestamp = new Date().getTime()
+        let params = {
+            "action": "check",
+            "timestamp": new Date().getTime()
+        }
+        fs.writeFileSync(path.resolve(__dirname, '../temp/instructions.json'), JSON.stringify(params));
+        let data  = await checkData('./temp/checkself_data.json', 10)
+        ctx.response.body = {
+            code: '0',
+            data: data,
+        }
+    } catch (err) {
+        console.error(err)
+        ctx.response.body = {
+            code: '99999',
+            data: {}
+        }
+    }
+    return
+}
+
+
+function checkData(_fileurl, _maxtime) {
+    let fileurl = _fileurl || './temp/calculate_data.json'
+    let maxtime = _maxtime || 7
     function loopFun() {
-        const st = fs.readFileSync('./temp/calculate_data.json', 'utf8');
+        const st = fs.readFileSync(fileurl, 'utf8');
         const data = JSON.parse(st)
         if (data.timestamp || (data.timestamp > timestamp)) {
             return data
@@ -95,7 +121,7 @@ function checkData() {
                 resolve(data)
                 return
             }
-            if (count > 7) {
+            if (count > maxtime) {
                 reject('超时')
             }
             count++
@@ -107,5 +133,6 @@ function checkData() {
 module.exports = {
     getData,
     setConfig,
-    runProgram
+    runProgram,
+    checkSelf
 }

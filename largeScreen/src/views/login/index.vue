@@ -27,6 +27,22 @@ const onFinishFailed = errorInfo => {
 };
 
 const myTitle = window.configItem.home_page_title
+
+function selfcheck() {
+  request({
+    url: '/api/checkSelf',
+    method: 'POST'
+  }).then(res => {
+    debugger
+    Modal.success({
+      title: res.data,
+    });
+  }).catch((e) => {
+    Modal.error({
+      title: '自检异常',
+    });
+  })
+}
 </script>
 
 <template>
@@ -47,6 +63,9 @@ const myTitle = window.configItem.home_page_title
           <a-button type="primary" html-type="submit" :block="true">登录</a-button>
         </a-form-item>
       </a-form>
+    </div>
+    <div>
+      <a-button class="check-button" @click="selfcheck">自检</a-button>
     </div>
   </div>
 </template>
@@ -97,5 +116,10 @@ const myTitle = window.configItem.home_page_title
 .card h2 {
   margin: 0 0 40px 0;
   text-align: center;
+}
+.check-button {
+  position: fixed;
+  right: 0px;
+  top: 0px;
 }
 </style>

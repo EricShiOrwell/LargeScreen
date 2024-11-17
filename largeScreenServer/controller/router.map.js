@@ -15,6 +15,7 @@ router.post('/getCsv', csvController.getCsv);
 router.get('/download/csv', csvController.downloaderCsv);
 router.post('/saveCsv', csvController.saveCsvUploader.single('file'), csvController.saveCsv);
 router.post('/saveCsvData', csvController.saveCsvData);
+router.post('/checkSelf', taskController.checkSelf);
 
 // add url-route:
 // router.get('/hello/:name', async (ctx, next) => {
