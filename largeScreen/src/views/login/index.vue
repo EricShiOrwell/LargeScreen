@@ -29,15 +29,29 @@ const onFinishFailed = errorInfo => {
 const myTitle = window.configItem.home_page_title
 
 function selfcheck() {
+  let seconds = 0
+  const modal = Modal.info({
+    title: '自检中……',
+    content: `已花费${seconds}秒.`,
+  });
+  const timer = setInterval(() => {
+    seconds++
+    modal.update({
+      content: `已花费${seconds}秒.`,
+    })
+  }, 1000)
   request({
     url: '/api/checkSelf',
     method: 'POST'
   }).then(res => {
-    debugger
+    clearInterval(timer)
+    modal.destroy()
     Modal.success({
       title: res.data,
     });
   }).catch((e) => {
+    clearInterval(timer)
+    modal.destroy()
     Modal.error({
       title: '自检异常',
     });

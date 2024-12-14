@@ -79,7 +79,7 @@ async function checkSelf(ctx, next) {
             "timestamp": new Date().getTime()
         }
         fs.writeFileSync(path.resolve(__dirname, '../temp/instructions.json'), JSON.stringify(params));
-        let data  = await checkData('./temp/checkself_data.json', 10)
+        let data  = await checkData('./temp/checkself_data.json', 20)
         ctx.response.body = {
             code: '0',
             data: data,
