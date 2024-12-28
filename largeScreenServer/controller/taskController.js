@@ -130,9 +130,33 @@ function checkData(_fileurl, _maxtime) {
     })
 }
 
+async function setTable(ctx, next) {
+    try {
+        let params = {
+            "action": "save",
+            "value": ctx.request.body,
+            "timestamp": new Date().getTime()
+        }
+        fs.writeFileSync(path.resolve(__dirname, '../temp/table_instructions.json'), JSON.stringify(params));
+        let data  = await checkData('./temp/table_data.json', 20)
+        ctx.response.body = {
+            code: '0',
+            data: data,
+        }
+    } catch (err) {
+        console.error(err)
+        ctx.response.body = {
+            code: '99999',
+            data: {}
+        }
+    }
+    return
+}
+
 module.exports = {
     getData,
     setConfig,
     runProgram,
-    checkSelf
+    checkSelf,
+    setTable
 }

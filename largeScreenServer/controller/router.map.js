@@ -17,6 +17,8 @@ router.post('/saveCsv', csvController.saveCsvUploader.single('file'), csvControl
 router.post('/saveCsvData', csvController.saveCsvData);
 router.post('/checkSelf', taskController.checkSelf);
 
+router.post('/setTable', taskController.setTable);
+
 // add url-route:
 // router.get('/hello/:name', async (ctx, next) => {
 //     var name = ctx.params.name;

@@ -1,5 +1,6 @@
 <script setup>
 import subTitle from '@/components/subTitle.vue';
+import editableTable from '@/components/editableTable.vue';
 import { reactive, ref, computed, onMounted } from 'vue';
 import { request } from '@/assets/myfetch.js'
 import { useCalculateStore } from '@/stores/counter'
@@ -41,7 +42,7 @@ const dataSource0 = ref([])
 const dataSource1 = ref([])
 const dataSource2 = ref([])
 const dataSource3 = ref([])
-const score = ref([0, 0])
+const score = ref([0, 0, 0])
 const currentSteps = ref(0)
 const stepItem = ref([])
 const logValue = ref('')
@@ -87,23 +88,23 @@ function selectRow(record) {
             }
         ]
     })
-    activeKey.value = 0
-    dataSource1.value = record.otherDetailed.table1 || []
-    dataSource2.value = record.otherDetailed.table2 || []
-    dataSource3.value = record.otherDetailed.table3 || []
-    score.value[0] = record.otherDetailed.table2_score || 0
-    score.value[1] = record.otherDetailed.table3_score || 0
+    // activeKey.value = 0
+    // dataSource1.value = record.otherDetailed.table1 || []
+    // dataSource2.value = record.otherDetailed.table2 || []
+    // dataSource3.value = record.otherDetailed.table3 || []
+    // score.value[0] = record.otherDetailed.table2_score || 0
+    // score.value[1] = record.otherDetailed.table3_score || 0
 
-    if (!mybarChart) {
-        mybarChart = echarts.init(document.getElementById('echarts_bar'));
-    }
-    let batX = props.configItem.module_table1_columns.map(item => item.title)
-    // let barY = dataSource1.value.map((row, i) => {
-    //     let itemY = props.configItem.module_table1_columns.map(item => row[item.dataIndex])
-    //     return {
+    // if (!mybarChart) {
+    //     mybarChart = echarts.init(document.getElementById('echarts_bar'));
+    // }
+    // let batX = props.configItem.module_table1_columns.map(item => item.title)
+
+    // let barY = dataSource1.value[0] ? [
+    //     {
     //         name: 'bar',
     //         type: 'bar',
-    //         data: itemY,
+    //         data: props.configItem.module_table1_columns.map(item => dataSource1.value[0][item.dataIndex]),
     //         emphasis: {
     //             focus: 'series'
     //         },
@@ -111,45 +112,31 @@ function selectRow(record) {
     //             return idx * 10;
     //         }
     //     }
-    // })
+    // ] : []
 
-    let barY = dataSource1.value[0] ? [
-        {
-            name: 'bar',
-            type: 'bar',
-            data: props.configItem.module_table1_columns.map(item => dataSource1.value[0][item.dataIndex]),
-            emphasis: {
-                focus: 'series'
-            },
-            animationDelay: function (idx) {
-                return idx * 10;
-            }
-        }
-    ] : []
+    // mybarChart.setOption({
+    //     color: ['#85ceff', '#5470c6', '#91cc75', '#fac858', '#ee6666'],
+    //     tooltip: {},
+    //     grid: {
+    //         top: 8,
+    //         left: "2%",
+    //         right: "2%",
+    //         bottom: 20
 
-    mybarChart.setOption({
-        color: ['#85ceff', '#5470c6', '#91cc75', '#fac858', '#ee6666'],
-        tooltip: {},
-        grid: {
-            top: 8,
-            left: "2%",
-            right: "2%",
-            bottom: 20
-
-        },
-        xAxis: {
-            data: batX,
-            splitLine: {
-                show: false
-            }
-        },
-        yAxis: {},
-        series: barY,
-        animationEasing: 'elasticOut',
-        animationDelayUpdate: function (idx) {
-            return idx * 5;
-        }
-    });
+    //     },
+    //     xAxis: {
+    //         data: batX,
+    //         splitLine: {
+    //             show: false
+    //         }
+    //     },
+    //     yAxis: {},
+    //     series: barY,
+    //     animationEasing: 'elasticOut',
+    //     animationDelayUpdate: function (idx) {
+    //         return idx * 5;
+    //     }
+    // });
 }
 function makeDecision() {
     selectValue0.value = props.configItem['module_select'].submodule[0].options[0].value
@@ -247,7 +234,7 @@ Calculate.$subscribe((mutation, state) => {
     dataSource1.value = []
     dataSource2.value = []
     dataSource3.value = []
-    score.value = [0, 0]
+    score.value = [0, 0, 0]
 
     mybarChart && mybarChart.setOption({
         series: [{ data: [] }]
@@ -273,6 +260,27 @@ function changeSteps(currect) {
 
 const segmentedOption = computed(() => Calculate.calculate.map(item => item.name))
 // const segmentedValue = ref(segmentedOption[0])
+
+
+const rightTable0 = ref()
+const rightTable1= ref()
+const rightTable2= ref()
+const rightTable = [rightTable0, rightTable1, rightTable2]
+
+function saveTable() {
+    // console.log(rightTable[activeKey.value])
+    let tempkey = Number(activeKey.value)
+    request({
+    url: '/api/setTable',
+    method: 'POST',
+    data: rightTable[tempkey].value.dataSource
+  }).then(res => {
+    // console.log(res)
+    score.value[tempkey] = res.data['table' + tempkey].score
+  })
+}
+
+
 </script>
 
 <template>
@@ -353,30 +361,45 @@ const segmentedOption = computed(() => Calculate.calculate.map(item => item.name
         <div>
             <sub-title :title="props.configItem['module_right_title2']"></sub-title>
             <a-tabs v-model:activeKey="activeKey" class="large-screen-right-tabs">
+                <template #rightExtra>
+                    <a-button type="primary" style="margin-right: 12px;" @click="saveTable">保存并运行</a-button>
+                </template>
                 <a-tab-pane :key="0" :tab="props.configItem['module_table_ext'][0]">
-                    <a-table :dataSource="dataSource1" :columns="columns1" size="small">
-                    </a-table>
-                    <div id="echarts_bar" style="width: 100%;height: 100px;"></div>
-                </a-tab-pane>
-                <a-tab-pane :key="1" :tab="props.configItem['module_table_ext'][1]">
+                    <!-- <a-table :dataSource="dataSource1" :columns="columns1" size="small">
+                    </a-table> -->
+                    <!-- <div id="echarts_bar" style="width: 100%;height: 100px;"></div> -->
                     <a-row>
                         <a-col :span="16">
-                            <a-table :dataSource="dataSource2" :columns="columns2" size="small">
-                            </a-table>
+                            <!-- <a-table :dataSource="dataSource1" :columns="columns1" size="small">
+                            </a-table> -->
+                            <editableTable :myColumns="columns1" ref="rightTable0"></editableTable>
                         </a-col>
                         <a-col :span="8">
                             <div class="waterbg">{{ score[0] }}</div>
                         </a-col>
                     </a-row>
                 </a-tab-pane>
-                <a-tab-pane :key="2" :tab="props.configItem['module_table_ext'][2]">
+                <a-tab-pane :key="1" :tab="props.configItem['module_table_ext'][1]">
                     <a-row>
                         <a-col :span="16">
-                            <a-table :dataSource="dataSource3" :columns="columns3" size="small">
-                            </a-table>
+                            <!-- <a-table :dataSource="dataSource2" :columns="columns2" size="small">
+                            </a-table> -->
+                            <editableTable :myColumns="columns2" ref="rightTable1"></editableTable>
                         </a-col>
                         <a-col :span="8">
                             <div class="waterbg">{{ score[1] }}</div>
+                        </a-col>
+                    </a-row>
+                </a-tab-pane>
+                <a-tab-pane :key="2" :tab="props.configItem['module_table_ext'][2]">
+                    <a-row>
+                        <a-col :span="16">
+                            <!-- <a-table :dataSource="dataSource3" :columns="columns3" size="small">
+                            </a-table> -->
+                            <editableTable :myColumns="columns3" ref="rightTable2"></editableTable>
+                        </a-col>
+                        <a-col :span="8">
+                            <div class="waterbg">{{ score[2] }}</div>
                         </a-col>
                     </a-row>
                 </a-tab-pane>
@@ -539,7 +562,8 @@ const segmentedOption = computed(() => Calculate.calculate.map(item => item.name
 .waterbg {
     background-image: url('@/assets/img/waterbg.png');
     width: auto;
-    height: 100%;
+    /* height: 100%; */
+    height: 176px;
     background-size: contain;
     /* 背景图片覆盖整个容器 */
     background-position: center;
