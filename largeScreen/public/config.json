@@ -60,7 +60,8 @@
             {
                 "label": "选项选项选项选项",
                 "type": "input",
-                "value": 0
+                "value": 0,
+                "relevance": [0, 1, 2]
             },
             {
                 "label": "选项1",
@@ -81,10 +82,11 @@
                         "label": "选项3",
                         "value": 2
                     }
-                ]
+                ],
+                "relevance": [0, 1]
             },
             {
-                "label": "选项1",
+                "label": "选项2",
                 "type": "select",
                 "value": 0,
                 "options": [
@@ -102,7 +104,8 @@
                     }
                 ],
                 "color": "red",
-                "bgColor": "#777777"
+                "bgColor": "#777777",
+                "relevance": [2]
             },
             {
                 "label": "选项1",

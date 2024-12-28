@@ -21,7 +21,7 @@
         <div class="excel-container">
             <!-- <hot-table :data="data" :rowHeaders="true" :colHeaders="true" 
             licenseKey="non-commercial-and-evaluation"></hot-table> -->
-            <hot-table :settings="hotSettings" ref="hotTableComponent"></hot-table>
+            <hot-table :settings="hotSettings" ref="hotTableComponent" :language="language"></hot-table>
         </div>
         <a-modal v-model:open="open" title="添加数据" @ok="insertData" @cancel="initData" ok-text="确认" cancel-text="取消">
             <a-form :model="formState" :label-col="{ span: 8 }" :wrapper-col="{ span: 12 }" autocomplete="off">
@@ -43,6 +43,10 @@
 <script>
 import { defineComponent } from 'vue';
 import { HotTable } from '@handsontable/vue3';
+import {
+  registerLanguageDictionary,
+  zhCN,
+} from 'handsontable/i18n';
 import { registerAllModules } from 'handsontable/registry';
 import 'handsontable/dist/handsontable.full.css';
 import { request } from '@/assets/myfetch.js'
@@ -50,8 +54,8 @@ import { Modal, message } from 'ant-design-vue';
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 import { createVNode } from 'vue';
 // register Handsontable's modules
+registerLanguageDictionary(zhCN);
 registerAllModules();
-
 export default defineComponent({
     data() {
         return {
@@ -82,7 +86,8 @@ export default defineComponent({
             spinning: true,
             fileList: [],
             open: false,
-            formState: {}
+            formState: {},
+            language: 'zh-CN'
         };
     },
     components: {

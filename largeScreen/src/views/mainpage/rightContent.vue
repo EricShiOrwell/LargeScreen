@@ -315,15 +315,18 @@ const segmentedOption = computed(() => Calculate.calculate.map(item => item.name
                             </template>
                         </template>
                     </a-table>
-                    <a-modal v-model:open="detailsListModal" title="详情页" :footer="null"
+                    <a-modal v-model:open="detailsListModal" title="详情页" :footer="null" :width="600"
                         :bodyStyle="{ padding: '16px 0px 24px 0px' }">
                         <template v-if="Array.isArray(detailsList[0])">
                             <a-tabs >
                                 <a-tab-pane :key="tab" v-for="(tab, j) in segmentedOption" :tab="tab">
                                     <a-descriptions bordered size="small">
-                                        <a-descriptions-item v-for="(item, i) in detailsList[j]" :key="i"
+                                        <a-descriptions-item v-for="(item, i) in detailsList[j]" :key="i"  :labelStyle="{color: item.color || '#ffffffd9'}"
                                             :label="item.label" :span="3">
-                                            {{ item.value }}
+                                            <a-row :style="{color: item.color || '#ffffffd9'}">
+                                                <a-col :span="12">{{ item.value }}</a-col>
+                                                <a-col :span="12">{{ item.range || '' }}</a-col>
+                                            </a-row>
                                         </a-descriptions-item>
                                     </a-descriptions>
                                 </a-tab-pane>
@@ -331,9 +334,12 @@ const segmentedOption = computed(() => Calculate.calculate.map(item => item.name
                         </template>
                         <template v-else>
                             <a-descriptions bordered size="small">
-                                <a-descriptions-item v-for="(item, i) in detailsList" :key="i" :label="item.label"
+                                <a-descriptions-item v-for="(item, i) in detailsList" :key="i" :label="item.label" :labelStyle="{color: item.color || '#ffffffd9'}"
                                     :span="3">
-                                    {{ item.value }}
+                                    <a-row :style="{color: item.color || '#ffffffd9'}">
+                                                <a-col :span="12">{{ item.value }}</a-col>
+                                                <a-col :span="12">{{ item.range || '' }}</a-col>
+                                    </a-row>
                                 </a-descriptions-item>
                             </a-descriptions>
                         </template>

@@ -24,7 +24,7 @@
                       "name": "胡彦斌1",
                       "name_hover": "胡彦斌hover",
                       "age": 32,
-                      "age_hover": [{"label": "test", "value": "testValue"}, {"label": "test2", "value": "testValue2"}],
+                      "age_hover": [{"label": "test", "value": "testValue", "range": "1m-10m"}, {"label": "test2", "value": "testValue2", "range": "1h-3h"}],
                       "id": 1,
                       "children": [{
                         "operate": false,
@@ -197,8 +197,8 @@
                 {
                   "key": "1",
                   "name": "胡彦斌",
-                  "name_hover": [[{"label": "test", "value": "testValue"}, {"label": "test2", "value": "testValue2"}],
-                  [{"label": "test2", "value": "testValue"}, {"label": "test2", "value": "testValue2"}],
+                  "name_hover": [[{"label": "test", "value": "testValue", "range": "1h-3h", "color": "#ffffffd9"}, {"label": "test2", "value": "testValue2", "color": "red"}],
+                  [{"label": "test2", "value": "testValue", "color": "#ff00ff"}, {"label": "test2", "value": "testValue2"}],
                   [{"label": "test3", "value": "testValue"}, {"label": "test2", "value": "testValue2"}]],
                   "age": 32,
                   "otherDetailed": {}

@@ -215,8 +215,8 @@ function changeSteps(currect) {
                 <template v-for="(frameItem, i) in dataValue" :key="i">
                     <a-space class="site-input-group-wrapper" direction="vertical" size="middle"
                         v-show="currentDataSteps === i">
-
-                        <a-input-group compact v-for="(item, j) in frameItem" :key="j">
+                        <template  v-for="(item, j) in frameItem">
+                            <a-input-group compact v-if="!item.relevance || item.relevance.includes(value0)" :key="j">
                             <a-input v-model:value="item.label" :disabled="true"
                                 :style="{ width: '49%', textAlign: 'center', color: item.color || 'rgba(0, 0, 0, 0.25)', backgroundColor: item.bgColor || 'rgba(0, 0, 0, 0.04)' }" />
                             <a-select v-model:value="item.value" style="width: 49%" :options="item.options"
@@ -225,6 +225,7 @@ function changeSteps(currect) {
                                 v-else-if="item.type === 'multiple'" mode="multiple" max-tag-count="responsive"></a-select>
                             <a-input v-model:value="item.value" style="width: 49%" v-else />
                         </a-input-group>
+                        </template>
                     </a-space>
                 </template>
                 <a-steps v-model:current="currentDataSteps" direction="vertical" :progressDot="true" style="width: 100px"
