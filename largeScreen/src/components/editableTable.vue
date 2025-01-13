@@ -1,83 +1,129 @@
 <template>
-    <a-table  :data-source="dataSource" :columns="columns" size="small" :pagination="false">
-        <template #bodyCell="{ column, text, record }">
-            <template v-if="column.dataIndex !== '_type'">
-                <div class="editable-cell">
-                    <div v-if="editableData.includes(column.key+'_' + record.key)" class="editable-cell-input-wrapper">
-                        <a-input v-model:value="dataSource[record.key][column.key]" @pressEnter="save(record.key, column.key)" />
-                        <check-outlined class="editable-cell-icon-check" @click="save(record.key, column.key)" />
-                    </div>
-                    <div v-else class="editable-cell-text-wrapper">
-                        {{ text || '请输入' }}
-                        <edit-outlined class="editable-cell-icon" @click="edit(record.key, column.key)" />
-                    </div>
-                </div>
-            </template>
-            <template v-else>
-                {{ text || ' ' }}
-            </template>
-        </template>
+    <a-table :data-source="dataSource" :columns="columns" size="middle" :pagination="false">
     </a-table>
+    <a-modal v-model:open="open" :title="props.title" :confirm-loading="confirmLoading" @ok="handleOk"
+        :width="modalWidth">
+        <template v-if="type === 'file'">
+            <p>请输入导入数据文件的网络路径：</p>
+            <a-input v-model:value="fileUrl" placeholder="..."></a-input>
+        </template>
+        <template v-else>
+            <a-descriptions :title="subTitle" bordered style="margin-top: 32px;" :column="6">
+                <a-descriptions-item label="数据类型" v-if="!props.hasH1" :span="6">权重</a-descriptions-item>
+                <template v-for="(item, i) in columns" :key="i">
+                    <a-descriptions-item :label="item.title" v-if="item.dataIndex !== '_type'" :span="item.span">
+                        <a-input v-model:value="tempDataSource[0][item.dataIndex]" placeholder="请输入" />
+                    </a-descriptions-item>
+                </template>
+            </a-descriptions>
+        </template>
+    </a-modal>
 </template>
 <script setup>
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import { cloneDeep } from 'lodash-es';
 import { CheckOutlined, EditOutlined } from '@ant-design/icons-vue';
+import { message } from 'ant-design-vue';
+import { request } from '@/assets/myfetch.js'
 const props = defineProps({
     myColumns: {
         type: Array,
         required: true
+    },
+    title: {
+        type: String,
+        required: true
+    },
+    hasH1: {
+        type: Boolean,
+    },
+    tableId: {
+        type: String,
+        required: true
     }
 })
+const subTitle = computed(() => props.hasH1 ? '搜索阶段' : '')
+const modalWidth = computed(() => props.hasH1 ? 1000 : 520)
+const fileUrl = ref('')
 const columns = computed(() => {
     return [
-    {
-        title: '',
-        dataIndex: '_type',
-    },
-    ].concat(props.myColumns)
+        {
+            title: '',
+            dataIndex: '_type',
+            align: 'center',
+            width: '50px'
+        },
+    ].concat(props.myColumns.map(item => {
+        return {
+            ...item,
+            title: item.title + (item.unit ? `(${item.unit})` : ''),
+            span: item.span ? item.span : 6
+        }
+    }))
 })
-// const columns = [
-//     {
-//         title: 'name',
-//         dataIndex: 'name',
-//         width: '30%',
-//     },
-//     {
-//         title: 'age',
-//         dataIndex: 'age',
-//     },
-//     {
-//         title: 'address',
-//         dataIndex: 'address',
-//     },
-//     {
-//         title: 'operation',
-//         dataIndex: 'operation',
-//     },
-// ];
+
 const dataSource = ref([
     {
         key: '0',
         _type: '输入'
     },
-    {
-        key: '1',
-        _type: '权重'
-    },
 ]);
-// const count = computed(() => dataSource.value.length + 1);
-const editableData = reactive([]);
-const edit = (key, column) => {
-    debugger
-    editableData.push(column+'_' + key)
-    // editableData[key] = cloneDeep(dataSource.value.filter(item => key === item.key)[0]);
-};
-const save = (key, column) => {
-    // Object.assign(dataSource.value.filter(item => key === item.key)[0], editableData[key]);
-    // delete editableData[key];
-    let i = editableData.findIndex(t => t === column+'_' + key)
-    editableData.splice(i, 1)
+
+watch(props.myColumns, (newVal) => {
+    let row = {
+        key: '0',
+        _type: '输入'
+    }
+    newVal.forEach(element => {
+        row[element.dataIndex] = (typeof element.default === "undefined") ? '' : element.default
+    });
+    dataSource.value = [row]
+}, {
+    immediate: true
+})
+const open = ref(false);
+const confirmLoading = ref(false);
+const type = ref('file')
+const tempDataSource = ref([{}])
+function openModal(_type) {
+    type.value = _type
+    open.value = true;
+    if (_type === 'data') {
+        let row = {
+        }
+        props.myColumns.forEach(element => {
+            row[element.dataIndex] = (typeof element.default === "undefined") ? '' : element.default
+        });
+        tempDataSource.value = [row]
+    }
+}
+const emit = defineEmits(['updateScore'])
+const handleOk = () => {
+    confirmLoading.value = true;
+    let params = {
+        id: props.tableId,
+    }
+    if(type.value === 'file') {
+        params.fileUrl = fileUrl.value
+    } else {
+        params.data = tempDataSource.value[0]
+    }
+    request({
+        url: '/api/setTable',
+        method: 'POST',
+        data: params
+    }).then(res => {
+        // res.data['table' + tempkey].score
+        emit('updateScore', res.data.score)
+        Object.keys(res.data.data).forEach(key => {
+            dataSource.value[0][key] = res.data.data[key]
+        })
+        open.value = false;
+        confirmLoading.value = false;
+    }).catch(() => {
+        confirmLoading.value = false;
+        message.error('运算失败!');
+    })
 };
 // const onDelete = key => {
 //     dataSource.value = dataSource.value.filter(item => item.key !== key);
@@ -92,7 +138,8 @@ const save = (key, column) => {
 //     dataSource.value.push(newData);
 // };
 defineExpose({
-    dataSource
+    dataSource,
+    openModal
 })
 </script>
 <style scoped>

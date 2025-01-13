@@ -1,1 +1,1 @@
-{"action":"save","value":[{"key":"0","_type":"输入"},{"key":"1","_type":"权重"}],"timestamp":1735419036555}
+{"action":"save","value":{"id":"table1","data":{"name":"2","age":"2","address":"2"}},"timestamp":1736754724295}

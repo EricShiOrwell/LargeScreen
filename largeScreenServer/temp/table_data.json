@@ -1,13 +1,10 @@
 {
     "data": {
-        "table0": {
-            "score": 50
-        },
-        "table1": {
-            "score": 30
-        },
-        "table2": {
-            "score": 70
+        "score": 50,
+        "data": {
+            "name": "4",
+            "age": "5",
+            "address": "6"
         }
     },
     "timestamp":1731861012352

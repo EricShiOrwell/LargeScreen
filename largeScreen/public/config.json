@@ -61,7 +61,8 @@
                 "label": "选项选项选项选项",
                 "type": "input",
                 "value": 0,
-                "relevance": [0, 1, 2]
+                "relevance": [0, 1, 2],
+                "group": ["group1", "subGroup1"]
             },
             {
                 "label": "选项1",
@@ -83,7 +84,8 @@
                         "value": 2
                     }
                 ],
-                "relevance": [0, 1]
+                "relevance": [0, 1],
+                "group": ["group1", "subGroup2"]
             },
             {
                 "label": "选项2",
@@ -105,57 +107,68 @@
                 ],
                 "color": "red",
                 "bgColor": "#777777",
-                "relevance": [2]
+                "relevance": [2],
+                "group": ["group2", "subGroup1"]
             },
             {
                 "label": "选项1",
                 "value": 0,
-                "color": "blue"
+                "color": "blue",
+                "group": ["group2", "subGroup1"]
             },
             {
                 "label": "选项1",
                 "value": 0,
-                "color": "blue"
+                "color": "blue",
+                "group": ["group2", "subGroup2"]
             },
             {
                 "label": "选项1",
                 "value": 0,
-                "color": "blue"
+                "color": "blue",
+                "group": ["group3", "subGroup1"]
             },
             {
                 "label": "选项1",
                 "value": 0,
-                "color": "blue"
+                "color": "blue",
+                "group": ["group1", "subGroup2"]
             },
             {
                 "label": "选项1",
                 "value": 0,
-                "color": "blue"
+                "color": "blue",
+                "group": ["group1", "subGroup2"]
             },
             {
                 "label": "选项1",
                 "value": 0,
-                "color": "blue"
+                "color": "blue",
+                "group": ["group1", "subGroup2"]
             },
             {
                 "label": "选项1",
                 "value": 0,
-                "color": "blue"
+                "color": "blue",
+                "group": ["group1", "subGroup2"]
             },
             {
                 "label": "选项1",
                 "value": 0,
-                "color": "blue"
+                "color": "blue",
+                "group": ["group1", "subGroup2"]
             },
             {
                 "label": "选项1",
                 "value": 0,
-                "color": "blue"
+                "color": "blue",
+                "group": ["group1", "subGroup2"]
             },
             {
                 "label": "选项1",
                 "value": 0,
-                "color": "blue"
+                "color": "blue",
+                "group": ["group1", "subGroup2"]
             }
         ],
         "_comment": "左上第二个模块",
@@ -317,17 +330,24 @@
             {
                 "title": "111",
                 "dataIndex": "name",
-                "key": "name"
+                "key": "name",
+                "unit": "",
+                "default": "1",
+                "align":"center"
             },
             {
                 "title": "222",
                 "dataIndex": "age",
-                "key": "age"
+                "key": "age",
+                "unit": "岁",
+                "default": "2"
             },
             {
                 "title": "333",
                 "dataIndex": "address",
-                "key": "address"
+                "key": "address",
+                "unit": "m2",
+                "default": ""
             }
         ],
         "_comment": "设置主表的表头数据",
@@ -335,17 +355,58 @@
             {
                 "title": "444",
                 "dataIndex": "name",
-                "key": "name"
+                "key": "name",
+                "unit": "",
+                "default": "",
+                "span": 3
             },
             {
                 "title": "555",
                 "dataIndex": "age",
-                "key": "age"
+                "key": "age",
+                "unit": "",
+                "default": "",
+                "span": 3
             },
             {
-                "title": "666",
+                "title": "d1",
+                "dataIndex": "d1",
+                "key": "d1",
+                "unit": "",
+                "default": "",
+                "span": 3
+            },
+            {
+                "title": "d2",
+                "dataIndex": "d2",
+                "key": "d2",
+                "unit": "",
+                "default": "",
+                "span": 3
+            },
+            {
+                "title": "d3adssadsadsadsadsad",
+                "dataIndex": "d3",
+                "key": "d3",
+                "unit": "",
+                "default": "",
+                "span": 2
+            },
+            {
+                "title": "d4daasdaad",
+                "dataIndex": "d4",
+                "key": "d4",
+                "unit": "",
+                "default": "",
+                "span": 2
+            },
+            {
+                "title": "66dsadadsa6",
                 "dataIndex": "address",
-                "key": "address"
+                "key": "address",
+                "unit": "",
+                "default": "",
+                "span": 2
             }
         ],
         "_comment": "设置主表的表头数据",
@@ -353,17 +414,23 @@
             {
                 "title": "姓名",
                 "dataIndex": "name",
-                "key": "name"
+                "key": "name",
+                "unit": "",
+                "default": ""
             },
             {
                 "title": "年龄",
                 "dataIndex": "age",
-                "key": "age"
+                "key": "age",
+                "unit": "",
+                "default": ""
             },
             {
                 "title": "住址",
                 "dataIndex": "address",
-                "key": "address"
+                "key": "address",
+                "unit": "",
+                "default": ""
             }
         ],
         "_comment": "右侧中间的名字",

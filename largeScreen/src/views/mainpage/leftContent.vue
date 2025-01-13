@@ -3,7 +3,7 @@ import subTitle from '@/components/subTitle.vue';
 import { message } from 'ant-design-vue';
 import emap from '@/components/emap.vue'
 import { request } from '@/assets/myfetch.js'
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useCalculateStore } from '@/stores/counter'
 const props = defineProps(['configItem'])
 const Calculate = useCalculateStore()
@@ -133,6 +133,46 @@ function changeSteps(currect) {
     // Calculate.frame = currect
     // Calculate.$patch({ frame: currect })
 }
+
+const recombinationDataValue =  computed(() => {
+    let res = dataValue.value.map(frame => {
+        let tab = new Map()
+        frame.forEach(element => {
+            if(element.group) {
+                if(tab.has(element.group[0])) {
+                    let temp = tab.get(element.group[0])
+                    if(temp.has(element.group[1])) {
+                        temp.get(element.group[1]).push(element)
+                    } else {
+                        temp.set(element.group[1], [element])
+                    }
+                } else {
+                    tab.set(element.group[0], new Map([[element.group[1], [element]]]))
+                }
+            }
+        });
+        let resTab = []
+        tab.forEach((value, key) => {
+            let temp = []
+            value.forEach((_value, _key) => {
+                temp.push({
+                    name: _key,
+                    value: _value
+                })
+            })
+            resTab.push({
+                name: key,
+                value: temp
+            })
+        })
+        // console.log(resTab)
+        return resTab
+    })
+    console.log(res)
+    return res
+})
+
+// const imagineActiveKey = ref('tab0')
 </script>
 
 <template>
@@ -206,27 +246,33 @@ function changeSteps(currect) {
     </a-flex>
 
     <a-modal v-model:open="open" title="导入和数据" @ok="handleOk" ok-text="确认" cancel-text="取消"
-        :bodyStyle="{ maxHeight: '500px', overflow: 'auto' }">
-        <template #footer>
+        :bodyStyle="{ maxHeight: '500px', overflow: 'auto'}">
+        <!-- <template #footer>
             <a-button key="submit" type="primary" @click="handleOk">确认</a-button>
-        </template>
+        </template> -->
         <template v-if="value1 === 2">
-            <a-flex justify="space-between">
-                <template v-for="(frameItem, i) in dataValue" :key="i">
-                    <a-space class="site-input-group-wrapper" direction="vertical" size="middle"
-                        v-show="currentDataSteps === i">
-                        <template  v-for="(item, j) in frameItem">
-                            <a-input-group compact v-if="!item.relevance || item.relevance.includes(value0)" :key="j">
-                            <a-input v-model:value="item.label" :disabled="true"
-                                :style="{ width: '49%', textAlign: 'center', color: item.color || 'rgba(0, 0, 0, 0.25)', backgroundColor: item.bgColor || 'rgba(0, 0, 0, 0.04)' }" />
-                            <a-select v-model:value="item.value" style="width: 49%" :options="item.options"
-                                v-if="item.type === 'select'"></a-select>
-                            <a-select v-model:value="item.value" style="width: 49%" :options="item.options"
-                                v-else-if="item.type === 'multiple'" mode="multiple" max-tag-count="responsive"></a-select>
-                            <a-input v-model:value="item.value" style="width: 49%" v-else />
+            <a-flex justify="space-between" style="margin-left: 24px;">
+                <template v-for="(frameItem, i) in recombinationDataValue" :key="i">
+                    <a-tabs  centered  v-show="currentDataSteps === i">
+                        <a-tab-pane :key="'tab'+j" :tab="group.name" v-for="(group, j) in frameItem">
+                            <div v-for="(subgroup, y) in group.value" :key="y">
+                                <a-divider orientation="left" style="margin-bottom: -5px;">{{ subgroup.name }}</a-divider>
+                                <a-space class="site-input-group-wrapper" direction="vertical" size="middle">
+                                    <template v-for="(ele, x) in subgroup.value" :key="x">
+                                <a-input-group compact v-if="!ele.relevance || ele.relevance.includes(value0)" :key="'element'+y">
+                            <a-input v-model:value="ele.label" :disabled="true"
+                                :style="{ width: '49%', textAlign: 'center', color: ele.color || 'rgba(0, 0, 0, 0.25)', backgroundColor: ele.bgColor || 'rgba(0, 0, 0, 0.04)' }" />
+                            <a-select v-model:value="ele.value" style="width: 49%" :options="ele.options"
+                                v-if="ele.type === 'select'"></a-select>
+                            <a-select v-model:value="ele.value" style="width: 49%" :options="ele.options"
+                                v-else-if="ele.type === 'multiple'" mode="multiple" max-tag-count="responsive"></a-select>
+                            <a-input v-model:value="ele.value" style="width: 49%" v-else />
                         </a-input-group>
-                        </template>
-                    </a-space>
+                                    </template>
+                                    </a-space>
+                            </div>
+                </a-tab-pane>
+                    </a-tabs>
                 </template>
                 <a-steps v-model:current="currentDataSteps" direction="vertical" :progressDot="true" style="width: 100px"
                     @change="changeSteps" :items="stepItem"></a-steps>

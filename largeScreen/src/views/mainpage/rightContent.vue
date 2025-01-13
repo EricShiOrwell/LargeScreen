@@ -280,6 +280,11 @@ function saveTable() {
   })
 }
 
+function openModal(type) {
+    let tempkey = Number(activeKey.value)
+    rightTable[tempkey].value.openModal(type)
+}
+
 
 </script>
 
@@ -323,7 +328,7 @@ function saveTable() {
                             </template>
                         </template>
                     </a-table>
-                    <a-modal v-model:open="detailsListModal" title="详情页" :footer="null" :width="600"
+                    <a-modal v-model:open="detailsListModal" title="详情页" :footer="null" :width="900"
                         :bodyStyle="{ padding: '16px 0px 24px 0px' }">
                         <template v-if="Array.isArray(detailsList[0])">
                             <a-tabs >
@@ -362,7 +367,9 @@ function saveTable() {
             <sub-title :title="props.configItem['module_right_title2']"></sub-title>
             <a-tabs v-model:activeKey="activeKey" class="large-screen-right-tabs">
                 <template #rightExtra>
-                    <a-button type="primary" style="margin-right: 12px;" @click="saveTable">保存并运行</a-button>
+                    <!-- <a-button type="primary" style="margin-right: 12px;" @click="saveTable">保存并运行</a-button> -->
+                    <a-button type="primary" style="margin-right: 12px;" @click="openModal('file')">数据文件导入</a-button>
+                    <a-button type="primary" style="margin-right: 12px;" @click="openModal('data')">输入数据</a-button>
                 </template>
                 <a-tab-pane :key="0" :tab="props.configItem['module_table_ext'][0]">
                     <!-- <a-table :dataSource="dataSource1" :columns="columns1" size="small">
@@ -372,7 +379,7 @@ function saveTable() {
                         <a-col :span="16">
                             <!-- <a-table :dataSource="dataSource1" :columns="columns1" size="small">
                             </a-table> -->
-                            <editableTable :myColumns="columns1" ref="rightTable0"></editableTable>
+                            <editableTable :myColumns="columns1" ref="rightTable0" :title="props.configItem['module_table_ext'][0]" @updateScore="param => score[0] = param" tableId="table1"></editableTable>
                         </a-col>
                         <a-col :span="8">
                             <div class="waterbg">{{ score[0] }}</div>
@@ -384,7 +391,7 @@ function saveTable() {
                         <a-col :span="16">
                             <!-- <a-table :dataSource="dataSource2" :columns="columns2" size="small">
                             </a-table> -->
-                            <editableTable :myColumns="columns2" ref="rightTable1"></editableTable>
+                            <editableTable :myColumns="columns2" ref="rightTable1" :title="props.configItem['module_table_ext'][1]" hasH1 @updateScore="param => score[1] = param" tableId="table2"></editableTable>
                         </a-col>
                         <a-col :span="8">
                             <div class="waterbg">{{ score[1] }}</div>
@@ -396,7 +403,7 @@ function saveTable() {
                         <a-col :span="16">
                             <!-- <a-table :dataSource="dataSource3" :columns="columns3" size="small">
                             </a-table> -->
-                            <editableTable :myColumns="columns3" ref="rightTable2"></editableTable>
+                            <editableTable :myColumns="columns3" ref="rightTable2" :title="props.configItem['module_table_ext'][1]" hasH1 @updateScore="param => score[2] = param" tableId="table3"></editableTable>
                         </a-col>
                         <a-col :span="8">
                             <div class="waterbg">{{ score[2] }}</div>
