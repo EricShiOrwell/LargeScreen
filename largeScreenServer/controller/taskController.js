@@ -14,7 +14,7 @@ async function getData(ctx, next) {
     }
     // 正常需要考虑并发请求的问题，这里暂时不做
     try {
-        let data = await checkData()
+        let data = await checkData('./temp/calculate_data.json', 7, timestamp)
         ctx.response.body = {
             code: '0',
             data: data
@@ -79,7 +79,7 @@ async function checkSelf(ctx, next) {
             "timestamp": new Date().getTime()
         }
         fs.writeFileSync(path.resolve(__dirname, '../temp/instructions.json'), JSON.stringify(params));
-        let data  = await checkData('./temp/checkself_data.json', 20)
+        let data  = await checkData('./temp/checkself_data.json', 20, params.timestamp)
         ctx.response.body = {
             code: '0',
             data: data,
@@ -95,13 +95,13 @@ async function checkSelf(ctx, next) {
 }
 
 
-function checkData(_fileurl, _maxtime) {
+function checkData(_fileurl, _maxtime, timestamp) {
     let fileurl = _fileurl || './temp/calculate_data.json'
     let maxtime = _maxtime || 7
     function loopFun() {
         const st = fs.readFileSync(fileurl, 'utf8');
         const data = JSON.parse(st)
-        if (data.timestamp || (data.timestamp > timestamp)) {
+        if (data.timestamp && (data.timestamp > timestamp)) {
             return data
         }
         return false
@@ -138,7 +138,7 @@ async function setTable(ctx, next) {
             "timestamp": new Date().getTime()
         }
         fs.writeFileSync(path.resolve(__dirname, '../temp/table_instructions.json'), JSON.stringify(params));
-        let data  = await checkData('./temp/table_data.json', 20)
+        let data  = await checkData('./temp/table_data.json', 20, params.timestamp)
         ctx.response.body = {
             code: '0',
             data: data,

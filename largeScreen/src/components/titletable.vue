@@ -8,19 +8,13 @@
             <a-input v-model:value="fileUrl" placeholder="..."></a-input>
         </template>
         <template v-else>
-            <a-descriptions :title="subTitle" bordered style="margin-top: 32px;" :column="6" :labelStyle="{width: '180px'}">
-                <a-descriptions-item label="数据类型" v-if="!props.hasH1" :span="6">
-                    <a-row>
-                        <a-col flex="auto" style="margin-right: 24px; text-align: center;">数据</a-col>
-                        <a-col flex="60px" style="padding-left: 6px;">权重(%)</a-col>
-                    </a-row>
-                </a-descriptions-item>
-                <template v-for="(item, i) in columns" :key="i">
-                    <a-descriptions-item :label="item.title" v-if="item.dataIndex !== '_type'" :span="item.span">
-                        <a-row>
-                        <a-col flex="auto" style="padding-right: 24px;"><a-input v-model:value="tempDataSource[0][item.dataIndex]" placeholder="请输入" /></a-col>
-                        <a-col flex="60px"><a-input v-model:value="tempDataSource[1][item.dataIndex]"/></a-col>
-                    </a-row>
+            <a-descriptions :title="subgroup.title" bordered style="margin-top: 32px;" :column="6" v-for="(subgroup, i) in group" :key="i" :labelStyle="{width: '200px'}">
+                <template v-for="(item, j) in subgroup.value" :key="j">
+                    <a-descriptions-item :label="item.title" :span=3>
+                        <a-input v-model:value="tempDataSource[0][item.dataIndex]" placeholder="请输入" />
+                    </a-descriptions-item>
+                    <a-descriptions-item label="权重(%)" :span=3>
+                        <a-input v-model:value="tempDataSource[1][item.dataIndex]" placeholder="请输入" />
                     </a-descriptions-item>
                 </template>
             </a-descriptions>
@@ -48,7 +42,6 @@ const props = defineProps({
         required: true
     }
 })
-const subTitle = computed(() => props.hasH1 ? '搜索阶段' : '')
 const modalWidth = computed(() => props.hasH1 ? 1000 : 600)
 const fileUrl = ref('')
 const columns = computed(() => {
@@ -74,16 +67,36 @@ const dataSource = ref([
         _type: '输入'
     },
 ]);
-
+const group = ref([])
 watch(props.myColumns, (newVal) => {
     let row = {
         key: '0',
         _type: '输入'
     }
+    let map = new Map()
     newVal.forEach(element => {
         row[element.dataIndex] = (typeof element.default === "undefined") ? '' : element.default
+        if(map.has(element.group)) {
+            map.get(element.group).push({
+                ...element,
+                title: element.title + (element.unit ? `(${element.unit})` : ''),
+            })
+        } else {
+            map.set(element.group, [{
+                ...element,
+                title: element.title + (element.unit ? `(${element.unit})` : ''),
+            }])
+        }
     });
     dataSource.value = [row]
+    group.value = []
+    map.forEach((value, key) => {
+        group.value.push({
+            title: key,
+            value: value
+        })
+    })
+    console.log(group)
 }, {
     immediate: true
 })

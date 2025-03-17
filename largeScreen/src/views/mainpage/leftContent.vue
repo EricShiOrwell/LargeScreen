@@ -257,7 +257,7 @@ const recombinationDataValue =  computed(() => {
                         <a-tab-pane :key="'tab'+j" :tab="group.name" v-for="(group, j) in frameItem">
                             <div v-for="(subgroup, y) in group.value" :key="y">
                                 <a-divider orientation="left" style="margin-bottom: -5px;">{{ subgroup.name }}</a-divider>
-                                <a-space class="site-input-group-wrapper" direction="vertical" size="middle">
+                                <a-space class="site-input-group-wrapper" direction="vertical" size="middle" style="width: 100%;">
                                     <template v-for="(ele, x) in subgroup.value" :key="x">
                                 <a-input-group compact v-if="!ele.relevance || ele.relevance.includes(value0)" :key="'element'+y">
                             <a-input v-model:value="ele.label" :disabled="true"

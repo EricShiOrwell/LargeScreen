@@ -1,6 +1,7 @@
 <script setup>
 import subTitle from '@/components/subTitle.vue';
 import editableTable from '@/components/editableTable.vue';
+import titletable from '@/components/titletable.vue';
 import { reactive, ref, computed, onMounted } from 'vue';
 import { request } from '@/assets/myfetch.js'
 import { useCalculateStore } from '@/stores/counter'
@@ -391,7 +392,7 @@ function openModal(type) {
                         <a-col :span="16">
                             <!-- <a-table :dataSource="dataSource2" :columns="columns2" size="small">
                             </a-table> -->
-                            <editableTable :myColumns="columns2" ref="rightTable1" :title="props.configItem['module_table_ext'][1]" hasH1 @updateScore="param => score[1] = param" tableId="table2"></editableTable>
+                            <titletable :myColumns="columns2" ref="rightTable1" :title="props.configItem['module_table_ext'][1]" hasH1 @updateScore="param => score[1] = param" tableId="table2"></titletable>
                         </a-col>
                         <a-col :span="8">
                             <div class="waterbg">{{ score[1] }}</div>
@@ -403,7 +404,7 @@ function openModal(type) {
                         <a-col :span="16">
                             <!-- <a-table :dataSource="dataSource3" :columns="columns3" size="small">
                             </a-table> -->
-                            <editableTable :myColumns="columns3" ref="rightTable2" :title="props.configItem['module_table_ext'][1]" hasH1 @updateScore="param => score[2] = param" tableId="table3"></editableTable>
+                            <titletable :myColumns="columns3" ref="rightTable2" :title="props.configItem['module_table_ext'][2]" hasH1 @updateScore="param => score[2] = param" tableId="table3"></titletable>
                         </a-col>
                         <a-col :span="8">
                             <div class="waterbg">{{ score[2] }}</div>

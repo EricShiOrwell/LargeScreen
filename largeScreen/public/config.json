@@ -61,7 +61,7 @@
                 "label": "选项选项选项选项",
                 "type": "input",
                 "value": 0,
-                "relevance": [0, 1, 2],
+                "relevance": [ 0, 1, 2],
                 "group": ["group1", "subGroup1"]
             },
             {
@@ -107,11 +107,11 @@
                 ],
                 "color": "red",
                 "bgColor": "#777777",
-                "relevance": [2],
+                "relevance": [0, 2],
                 "group": ["group2", "subGroup1"]
             },
             {
-                "label": "选项1",
+                "label": "八个字测试宽度了",
                 "value": 0,
                 "color": "blue",
                 "group": ["group2", "subGroup1"]
@@ -328,7 +328,7 @@
         "_comment": "设置主表的表头数据",
         "module_table1_columns": [
             {
-                "title": "111",
+                "title": "八个字宽度要测试",
                 "dataIndex": "name",
                 "key": "name",
                 "unit": "",
@@ -358,7 +358,7 @@
                 "key": "name",
                 "unit": "",
                 "default": "",
-                "span": 3
+                "group": "group1"
             },
             {
                 "title": "555",
@@ -366,7 +366,7 @@
                 "key": "age",
                 "unit": "",
                 "default": "",
-                "span": 3
+                "group": "group1"
             },
             {
                 "title": "d1",
@@ -374,7 +374,7 @@
                 "key": "d1",
                 "unit": "",
                 "default": "",
-                "span": 3
+                "group": "group1"
             },
             {
                 "title": "d2",
@@ -382,7 +382,7 @@
                 "key": "d2",
                 "unit": "",
                 "default": "",
-                "span": 3
+                "group": "group1"
             },
             {
                 "title": "d3adssadsadsadsadsad",
@@ -390,7 +390,7 @@
                 "key": "d3",
                 "unit": "",
                 "default": "",
-                "span": 2
+                "group": "group2"
             },
             {
                 "title": "d4daasdaad",
@@ -398,7 +398,7 @@
                 "key": "d4",
                 "unit": "",
                 "default": "",
-                "span": 2
+                "group": "group2"
             },
             {
                 "title": "66dsadadsa6",
@@ -406,7 +406,7 @@
                 "key": "address",
                 "unit": "",
                 "default": "",
-                "span": 2
+                "group": "group3"
             }
         ],
         "_comment": "设置主表的表头数据",
@@ -416,21 +416,24 @@
                 "dataIndex": "name",
                 "key": "name",
                 "unit": "",
-                "default": ""
+                "default": "",
+                "group": "group1"
             },
             {
                 "title": "年龄",
                 "dataIndex": "age",
                 "key": "age",
                 "unit": "",
-                "default": ""
+                "default": "",
+                "group": "group1"
             },
             {
                 "title": "住址",
                 "dataIndex": "address",
                 "key": "address",
                 "unit": "",
-                "default": ""
+                "default": "",
+                "group": "group1"
             }
         ],
         "_comment": "右侧中间的名字",
