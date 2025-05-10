@@ -95,10 +95,23 @@ function openModal(_type) {
     if (_type === 'data') {
         let row0 = tempDataSource.value[0]
         let row1 = tempDataSource.value[1]
-        props.myColumns.forEach(element => {
+        let lastChangeData = null
+        try {
+            lastChangeData = JSON.parse(sessionStorage.getItem("editTableData"+props.tableId))
+        } catch (error) {
+            console.log("nodata")
+        }
+        if (lastChangeData) {
+            props.myColumns.forEach(element => {
+            row0[element.dataIndex] = element.dataIndex in lastChangeData[0] ? lastChangeData[0][element.dataIndex] : ((typeof element.default === "undefined") ? '' : element.default)
+            row1[element.dataIndex] = element.dataIndex in lastChangeData[1] ? lastChangeData[1][element.dataIndex] : ((typeof element.weightDefault === "undefined") ? '' : element.weightDefault)
+        });
+        } else {
+            props.myColumns.forEach(element => {
             row0[element.dataIndex] = (typeof element.default === "undefined") ? '' : element.default
             row1[element.dataIndex] = (typeof element.weightDefault === "undefined") ? '' : element.weightDefault
         });
+        }
         // tempDataSource.value = [row0. row1]
     }
     type.value = _type
@@ -113,6 +126,7 @@ const handleOk = () => {
     if(type.value === 'file') {
         params.fileUrl = fileUrl.value
     } else {
+        sessionStorage.setItem("editTableData"+props.tableId, JSON.stringify(tempDataSource.value))
         params.data = tempDataSource.value
     }
     request({
