@@ -3,7 +3,7 @@ import { LogoutOutlined } from '@ant-design/icons-vue';
 import { onUnmounted, ref } from 'vue';
 import { useRouter } from 'vue-router'
 
-const props = defineProps(['configItem'])
+// const props = defineProps(['configItem'])
 
 const router = useRouter()
 function gotoDataExcel() {
@@ -23,29 +23,29 @@ function updateTime() {
   // document.getElementById('time').textContent = hours + ':' + minutes + ':' + seconds;
 }
 
-const timer = setInterval(updateTime, 1000);
+// const timer = setInterval(updateTime, 1000);
 onUnmounted(() => {
-  clearInterval(timer)
+  // clearInterval(timer)
 })
 </script>
 
 <template>
   <div class="header-container">
     <div class="header-bg">
-      <div :style="{...props.configItem.module_title}">{{ props.configItem.module_title.text }}</div>
+      <div>演示模块</div>
     </div>
-    <div class="time-container">{{ showTimeString }}</div>
-    <div class="dataexcel-link"><a-button type="link" @click="gotoDataExcel">数据库管理</a-button>
+    <!-- <div class="time-container">{{ showTimeString }}</div> -->
+    <!-- <div class="dataexcel-link"><a-button type="link" @click="gotoDataExcel">数据库管理</a-button> -->
 
-      <a-tooltip placement="bottom">
+      <!-- <a-tooltip placement="bottom">
         <template #title>
           <span>登出</span>
         </template>
         <a-button type="link" @click="logout"> <template #icon>
             <LogoutOutlined />
           </template></a-button>
-      </a-tooltip>
-    </div>
+      </a-tooltip> -->
+    <!-- </div> -->
   </div>
 </template>
 <style scoped>

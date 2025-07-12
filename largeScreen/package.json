@@ -16,7 +16,9 @@
     "@handsontable/vue3": "^14.4.0",
     "ant-design-vue": "^4.2.3",
     "cesium": "^1.118.2",
+    "cesium-heatmap": "^0.0.4",
     "handsontable": "^14.4.0",
+    "heatmap.js": "^2.0.5",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"

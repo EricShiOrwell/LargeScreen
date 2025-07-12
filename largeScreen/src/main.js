@@ -8,9 +8,10 @@ import 'ant-design-vue/dist/reset.css'
 
 import App from './App.vue'
 import router from './router'
+import * as Cesium from 'cesium';
 
 window.CESIUM_BASE_URL = '/Cesium/';
-
+window.Cesium = Cesium;
 const app = createApp(App)
 
 app.use(Antd)

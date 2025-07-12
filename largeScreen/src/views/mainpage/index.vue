@@ -1,23 +1,10 @@
 <script setup>
-import myContent from './myContent.vue';
+// import myContent from './myContent.vue';
 import myHeader from './myHeader.vue';
-import myFooter from './myFooter.vue';
+import myMenu from './menu.vue';
 import { onMounted, ref } from 'vue';
-const configItem = ref(window.configItem)
-// onMounted(() => {
-//   fetch('/config.json').then(response => {
-//     return response.json()
-//   }).then(data => {
-//     debugger
-//     if (data.configItem) {
-//       configItem.value = data.configItem
-//     } else {
-//       alert('配置文件缺失')
-//     }
-//   }).catch((err) => {
-//     alert('配置文件缺失')
-//   })
-// })
+import emap from '@/components/emap.vue'
+
 const headerStyle = {
   textAlign: 'center',
   color: '#fff',
@@ -44,13 +31,15 @@ const footerStyle = {
 <template>
   <a-layout :style="{ height: '100%' }" class="large-Screen">
     <a-layout-header :style="headerStyle">
-      <my-header :configItem="configItem"></my-header>
+      <my-header></my-header>
     </a-layout-header>
-    <a-layout-content :style="contentStyle">
-      <my-content :configItem="configItem"></my-content>
-    </a-layout-content>
-    <a-layout-footer :style="footerStyle">
-      <my-footer></my-footer>
-    </a-layout-footer>
+    <a-layout>
+      <a-layout-content :style="contentStyle">
+        <emap></emap>
+      </a-layout-content>
+      <a-layout-sider>
+        <myMenu></myMenu>
+      </a-layout-sider>
+    </a-layout>
   </a-layout>
 </template>
